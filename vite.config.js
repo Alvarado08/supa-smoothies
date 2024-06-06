@@ -13,6 +13,7 @@ export default defineConfig(({ mode }) => {
     define: {
       "process.env": processEnv,
     },
+    base: "/supa-smoothies/",
     plugins: [react()],
   };
 });
