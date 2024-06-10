@@ -37,6 +37,19 @@ export default function Home() {
 
     fetchSmoothies();
   }, [orderBy]);
+
+  if (isLoading) {
+    return (
+      <div className="p-8">
+        <LoadingIndicator />
+      </div>
+    );
+  }
+
+  if (fetchError) {
+    return <p className="p-8 text-red-500">{fetchError}</p>;
+  }
+
   return (
     <>
       <article className="flex items-center gap-3 p-8">
@@ -59,12 +72,6 @@ export default function Home() {
           onClick={() => setOrderBy("rating")}
         />
       </article>
-      {fetchError && <p className="p-8 text-red-500">{fetchError}</p>}
-      {isLoading && (
-        <div className="p-8">
-          <LoadingIndicator />
-        </div>
-      )}
       {smoothies && smoothies.length === 0 && (
         <p className="p-8">No smoothies yet...</p>
       )}

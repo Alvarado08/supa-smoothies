@@ -3,6 +3,8 @@ import { useParams, useNavigate } from "react-router-dom";
 import { useState, useEffect } from "react";
 import supabase from "../config/supabaseClient";
 
+import LoadingIndicator from "../components/LoadingIndicator";
+
 export default function Update() {
   const { id } = useParams();
   const navigate = useNavigate();
@@ -11,6 +13,7 @@ export default function Update() {
   const [method, setMethod] = useState("");
   const [rating, setRating] = useState("");
   const [formError, setFormError] = useState(null);
+  const [isLoading, setIsLoading] = useState(true);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -53,11 +56,19 @@ export default function Update() {
         setTitle(data.title);
         setMethod(data.method);
         setRating(data.rating);
+        setIsLoading(false);
       }
     };
 
     fetchSmoothies();
   }, [id, navigate]);
+  if (isLoading) {
+    return (
+      <div className="p-8">
+        <LoadingIndicator />
+      </div>
+    );
+  }
   return (
     <div className="max-w-[85rem] px-4 py-10 sm:px-6 lg:px-8 lg:py-14 mx-auto">
       <div className="mx-auto max-w-2xl">
